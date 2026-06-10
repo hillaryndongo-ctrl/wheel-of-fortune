@@ -1,9 +1,6 @@
 # Dictionary file location, change if needed.
 dictionaryloc = 'data/dictionary.txt'
 
-# Words file location, change if needed.
-wordsloc = 'data/words.txt'
-
 # Turn text file location, change if needed.
 turntextloc = 'data/turntext.txt'
 

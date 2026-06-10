@@ -7,6 +7,8 @@ from config import roundstatusloc
 from config import finalprize # you must set this in your config.py file
 from config import finalRoundTextLoc
 from config import debug
+from player import Player
+
 # Be sure to check the config.py file and make sure that your paths for all of the different locations match those in the config.py file.
 
 
@@ -28,8 +30,15 @@ roundstatus = ""
 finalroundtext = ""
 
 def load_words():
-    with open(dictionaryloc) as f:
-        print(f.read().splitlines())
+    global dictionary
+    try:
+        with open(dictionaryloc, encoding="utf-8") as f:
+            dictionary = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f"Words file not found: {dictionaryloc}")
+        dictionary = []
+    print("Loaded words:", dictionary)
+    return dictionary
 
 def mask_phrase(phrase):
     masked = ""
@@ -76,32 +85,60 @@ def spinWheel(playerNum):
 
 def readDictionaryFile():
     global dictionary
-    with open(dictionaryloc) as f:
-        dictionary = f.read().splitlines()
-    # Read dictionary.txt file in from dictionary file location.
-    # Store each word from the dictionary.txt file in a list.
+    try:
+        with open(dictionaryloc, encoding="utf-8") as f:
+            dictionary = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        dictionary = []
+    return dictionary
       
     
 def readTurnTxtFile():
     global turntext   
-    # Read in initial turn status "message" from turntext.txt file.
+    global turntext
+    try:
+        with open(turntextloc, encoding="utf-8") as f:
+            turntext = f.read().strip()
+    except FileNotFoundError:
+        turntext = ""
+    return turntext
 
         
 def readFinalRoundTxtFile():
     global finalroundtext   
-    # Read in the final round text "message" from finalround.txt file.
+    try:
+        with open(finalRoundTextLoc, encoding="utf-8") as f:
+            finalroundtext = f.read().strip()
+    except FileNotFoundError:
+        finalroundtext = ""
+    return finalroundtext
 
 def readRoundStatusTxtFile():
     global roundstatus
-    # Read in the round status text from the roundstatus.txt file location. 
+    try:
+        with open(roundstatusloc, encoding="utf-8") as f:
+            roundstatus = f.read().strip()
+    except FileNotFoundError:
+        roundstatus = ""
+    return roundstatus
 
 def readWheelTxtFile():
     global wheellist
-    # Read the Wheel name from input using the wheeldata.txt file location.
+    try:
+        with open(wheeltextloc, encoding="utf-8") as f:
+            wheellist = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        wheellist = []
+    return wheellist
     
 def getPlayerInfo():
     global players
-    # Read in player names from command prompt input
+    for index in players:
+        name = input(f"Enter name for Player {index + 1}: ").strip()
+        if not name:
+            name = f"Player{index + 1}"
+        players[index] = Player(name)
+    return players
 
 
 def gameSetup():
@@ -115,45 +152,37 @@ def gameSetup():
     readWheelTxtFile()
     getPlayerInfo()
     readRoundStatusTxtFile()
-    readFinalRoundTxtFile() 
+    readFinalRoundTxtFile()
+    return True
     
 def getWord():
     global dictionary
-    if debug == True:
+    global roundWord
+    global blankWord
+
+    if not dictionary:
+        load_words()
+    roundWord = random.choice(dictionary) if dictionary else "WHEEL OF FORTUNE"
+    blankWord = list(mask_phrase(roundWord))
+    if debug:
         print(roundWord)
-    #choose random word from dictionary
-    #make a list of the word with underscores instead of letters.
-    return roundWord,roundUnderscoreWord
+    return roundWord, blankWord
 
 def wofRoundSetup():
     global players
     global roundWord
     global blankWord
-    if debug == True:
-        print(roundWord)
-    # Set round total for each player = 0
-    # Return the starting player number (random)
-    # Use getWord function to retrieve the word and the underscore word (blankWord)
 
+    for player in players.values():
+        player.resetRoundBank()
+    initPlayer = random.choice(list(players.keys()))
+    getWord()
+    if debug:
+        print(roundWord)
     return initPlayer
 
 
-def spinWheel(playerNum):
-    global wheellist
-    global players
-    global vowels
-
-    # Get random value for wheellist
-    # Check for bankrupcy, and take action.
-    # Check for loose turn
-    # Get amount from wheel if not loose turn or bankruptcy
-    # Ask user for letter guess
-    # Use guessletter function to see if guess is in word, and return count
-    # Change player round total if they guess right.     
-    return stillinTurn
-
-
-def guessletter(letter, playerNum): 
+def guessletter(letter): 
     global blankWord
     global roundWord
 

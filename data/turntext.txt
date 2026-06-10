@@ -1,2 +1,1 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+Spin the wheel to earn money by guessing a consonant. Buy a vowel for $250, or solve the puzzle at any time to win the round. Good luck!

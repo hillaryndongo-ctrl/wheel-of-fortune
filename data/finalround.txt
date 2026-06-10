@@ -1,2 +1,5 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+Final Round Rules:
+- R, S, T, L, N, and E are automatically revealed.
+- Choose three additional consonants and one vowel.
+- Then make your final guess to win the bonus prize.
+Good luck!

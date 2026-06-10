@@ -55,3 +55,9 @@ class Player:
             return True
         print("That guess is incorrect.")
         return False
+    
+    def get_player_status(player):
+        return (
+        f"Player(name={player.name!r}, roundBank=${player.roundBank}, "
+        f"totalBank=${player.totalBank})"
+        )

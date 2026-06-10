@@ -1,2 +1,1 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+Round complete. The puzzle has been solved and scores have been updated. Get ready for the next round.

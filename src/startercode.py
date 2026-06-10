@@ -170,27 +170,12 @@ def guessletter(letter, playerNum):
     return goodGuess, count
 
 def buyVowel(playerNum):
-    global players
-    global vowels
-    
-    # Take in a player number
-    # Ensure player has 250 for buying a vowelcost
-    # Use guessLetter function to see if the letter is in the file
-    # Ensure letter is a vowel
-    # If letter is in the file let goodGuess = True
-    
-    return goodGuess      
+    player = players[playerNum]
+    return player.buy_vowel(roundWord, blankWord, vowelcost, vowels)     
         
 def guessWord(playerNum):
-    global players
-    global blankWord
-    global roundWord
-    
-    # Take in player number
-    # Ask for input of the word and check if it is the same as wordguess
-    # Fill in blankList with all letters, instead of underscores if correct 
-    # return False ( to indicate the turn will finish)  
-    
+    player = players[playerNum]
+    player.get_word_guess(roundWord, blankWord)
     return False
     
     

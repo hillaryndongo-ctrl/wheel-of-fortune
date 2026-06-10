@@ -46,3 +46,12 @@ class Player:
 
         print(f"Sorry, the vowel '{guess}' is not in the word.")
         return False
+    
+    def get_word_guess(self, roundWord, blankWord):
+        guess = input("Guess the entire word or phrase: ").strip()
+        if guess.lower() == roundWord.lower():
+            blankWord[:] = list(roundWord)
+            print("Congratulations! You've guessed the word/phrase correctly!")
+            return True
+        print("That guess is incorrect.")
+        return False

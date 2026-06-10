@@ -63,6 +63,7 @@ def spinWheel(playerNum):
 
     amount = int(wheel_value.replace("$", "").replace(",", ""))
 
+    guess = player.get_consonant_guess()
     goodGuess, count = guessletter(guess)
     if goodGuess:
         winnings = amount * count
@@ -153,14 +154,19 @@ def spinWheel(playerNum):
 
 
 def guessletter(letter, playerNum): 
-    global players
     global blankWord
-    # parameters:  take in a letter guess and player number
-    # Change position of found letter in blankWord to the letter instead of underscore 
-    # return goodGuess= true if it was a correct guess
-    # return count of letters in word. 
-    # ensure letter is a consonant.
-    
+    global roundWord
+
+    goodGuess = False
+    count = 0
+    letter_lower = letter.lower().strip()
+
+    for index, char in enumerate(roundWord):
+        if char.lower() == letter_lower and blankWord[index] == "_":
+            blankWord[index] = char
+            goodGuess = True
+            count += 1
+
     return goodGuess, count
 
 def buyVowel(playerNum):

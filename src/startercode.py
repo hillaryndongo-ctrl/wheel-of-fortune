@@ -31,6 +31,15 @@ def load_words():
     with open(dictionaryloc) as f:
         print(f.read().splitlines())
 
+def mask_phrase(phrase):
+    masked = ""
+    for char in phrase:
+        if char.isalpha():
+            masked += "_"
+        else:
+            masked += char
+    return masked
+
 def readDictionaryFile():
     global dictionary
     # Read dictionary.txt file in from dictionary file location.

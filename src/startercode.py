@@ -27,6 +27,9 @@ vowels = {"a", "e", "i", "o", "u"}
 roundstatus = ""
 finalroundtext = ""
 
+def load_words():
+    with open(dictionaryloc) as f:
+        print(f.read().splitlines())
 
 def readDictionaryFile():
     global dictionary
